@@ -25,10 +25,10 @@ fn ask_if_should_import_all(finder: &FinderChoice) -> Result<bool> {
     Ok(response.to_lowercase().starts_with('y'))
 }
 
-pub fn main(uri: String) -> Result<()> {
+pub fn main(uri: String, import_all: bool) -> Result<()> {
     let finder = CONFIG.finder();
 
-    let should_import_all = ask_if_should_import_all(&finder).unwrap_or(false);
+    let should_import_all = import_all || ask_if_should_import_all(&finder).unwrap_or(false);
     let (actual_uri, user, repo) = git::meta(uri.as_str());
 
     let cheat_pathbuf = filesystem::default_cheat_pathbuf()?;
